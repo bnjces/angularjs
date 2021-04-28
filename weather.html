@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather AngularJS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-app="weather">
+    <div  ng-controller="current">
+        <h1>{{city}}</h1>
+    </div>
+    <p>Zip: <input id="zipcode" type="text" /></p>
+</body>
+<script>
+    var app = angular.module('weather',[]);
+    app.controller('current', function($scope, $http){
+        console.log("weather");
+        let zip = document.getElementById("#zipcode");
+        if (zip === null){
+            $scope.zip = "19130";
+        }else{
+            $scope.zip = zip.innerText();
+        }
+        
+        $http.get("http://api.openweathermap.org/data/2.5/weather?zip=19130&units=imperial&appid=<api key>")
+        .then(function(response){
+            console.log(response.data);
+            $scope.city = response.data.name;
+            console.log($scope);
+        })
+    })
+
+</script>
+</html>
